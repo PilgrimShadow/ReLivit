@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include ../partials/header.ejs %>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+</head>
+
+<body>
+
+<% include ../partials/nav.ejs %>
+
+<form action='/users/add' method='post' id="add-user-form">
+
+    <label for="add-user-firstname-input"></label>
+    <input type='text' name='firstname' placeholder='first name...' id="add-user-firstname-input">
+
+    <label for="add-user-lastname-input"></label>
+    <input type='text' name='lastname' placeholder='last name...' id="add-user-lastname-input">
+
+    <label for="add-user-username-input"></label>
+    <input type='text' name='username' placeholder='username...' id="add-user-username-input" required>
+
+    <label for="add-user-email-input"></label>
+    <input type="email" name="email" placeholder="your@email.com" id="add-user-email-input" required>
+
+    <!--
+    <label for="add-user-about-input"></label>
+    <input type="text" name="about" placeholder="about me..." id="add-user-about-input">
+-->
+    <button type='submit'>Add</button>
+</form>
+
+<form action="/users/update/email" method="post" id="update-user-email-form">
+    <label for="update-user-email-input"></label>
+    <input type="email" name="email" placeholder="new@email.com" id="update-user-email-input" required>
+
+    <button type='submit'>Update</button>
+</form>
+
+</body>
+
+<script src="javascripts/FormHandlers.js"></script>
+<script>
+    submitInBackground('#add-user-form', '/users/add', (responseData, formData, formElem) => {
+        if (responseData['success'] === true) {
+            document.getElementById('add-user-form').reset();
+        } else {
+            console.log(responseData);
+            alert('Added user to system');
+        }
+
+    });
+
+    submitInBackground('#update-user-email-form', '/users/update/email', (responseData, formData, formElem) => {
+        if (responseData['success'] === true) {
+            document.getElementById('update-user-email-form').reset();
+        } else {
+            console.log(responseData);
+            alert('Added user to system');
+        }
+
+    });
+</script>
+
+</html>
